@@ -1,6 +1,19 @@
-version: '3.1'
+version: '3.7'
+
+networks:
+  app-tier:
+    driver: bridge
 
 services:
+
+  api:
+    build:
+      context: api
+    hostname: api
+    restart: always
+    depends_on:
+      - mongo
+
   mongo:
     image: mongo
     restart: always
@@ -18,3 +31,5 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    depends_on:
+      - mongo
