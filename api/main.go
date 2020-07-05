@@ -3,16 +3,32 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"log"
+	"net/http"
 	"time"
 )
 
 func main() {
-	fmt.Println("gh")
+
+	router := gin.Default()
+	gin.SetMode(gin.DebugMode)
+
+	// Simple group: v1
+	v1 := router.Group("/v1")
+	{
+		v1.GET("/url.insert", InsertUrl)
+
+	}
+	router.Run(":8080")
+
+}
+
+func InsertUrl(c *gin.Context) {
 
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://mongo:27017").SetAuth(options.Credential{
 		AuthMechanism:           "",
@@ -61,5 +77,7 @@ func main() {
 	})
 
 	fmt.Println(podcastResult)
+
+	c.JSON(http.StatusOK, podcastResult)
 
 }
