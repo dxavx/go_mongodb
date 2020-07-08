@@ -1,16 +1,12 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"go_mongodb/api/modules"
 	"log"
 	"net/http"
-	"time"
 )
 
 func main() {
@@ -30,34 +26,8 @@ func main() {
 
 func InsertUrl(c *gin.Context) {
 
-	// Подключение с авторизацией
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://mongo:27017").SetAuth(options.Credential{
-		AuthMechanism:           "",
-		AuthMechanismProperties: nil,
-		AuthSource:              "admin",
-		Username:                "root",
-		Password:                "example",
-		PasswordSet:             false,
-	}))
-
-	if err != nil {
-		log.Fatal("Error connect MongoDB")
-	}
-
-	// Таймаут подключения
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	err = client.Connect(ctx)
-	if err != nil {
-		log.Fatal()
-	}
-
+	client, ctx, _ := modules.ConnectMongo()
 	defer client.Disconnect(ctx)
-
-	// Ping DB
-	err = client.Ping(ctx, readpref.Primary())
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	// List DB
 	databases, err := client.ListDatabaseNames(ctx, bson.M{})
