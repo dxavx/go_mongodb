@@ -17,14 +17,14 @@ func main() {
 	// Simple group: v1
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/url.insert", InsertUrl)
+		v1.GET("/url.insert", Insert)
 
 	}
 	router.Run(":8080")
 
 }
 
-func InsertUrl(c *gin.Context) {
+func Insert(c *gin.Context) {
 
 	client, ctx, _ := modules.ConnectMongo()
 	defer client.Disconnect(ctx)
@@ -36,21 +36,26 @@ func InsertUrl(c *gin.Context) {
 	}
 	fmt.Println(databases)
 
-	// Новая DB
+	// New DB
 	quickstartDatabase := client.Database("quickstart")
 
-	// Новая коллекция
+	// New collection
 	podcastsCollection := quickstartDatabase.Collection("podcasts")
-	//episodesCollection := quickstartDatabase.Collection("episodes")
 
-	// Добавляет элемент в коллекцию
-	podcastResult, err := podcastsCollection.InsertOne(ctx, bson.D{
-		{Key: "title", Value: "The Polyglot Developer Podcast"},
-		{Key: "author", Value: "Nic Raboy"},
-	})
+	song := modules.Song{
+		Title:     "Track01",
+		Artist:    "NoName",
+		Album:     "Unknown",
+		Performer: "Unknown",
+	}
+
+	data, err := bson.Marshal(song)
+
+	// Adds an item to the collection
+	// you can insert a JSON structure directly without converting it to BSON
+	podcastResult, err := podcastsCollection.InsertOne(ctx, data)
 
 	fmt.Println(podcastResult)
-
 	c.JSON(http.StatusOK, podcastResult)
 
 }
