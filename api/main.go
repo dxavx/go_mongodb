@@ -30,6 +30,7 @@ func main() {
 
 func InsertUrl(c *gin.Context) {
 
+	// Подключение с авторизацией
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://mongo:27017").SetAuth(options.Credential{
 		AuthMechanism:           "",
 		AuthMechanismProperties: nil,
@@ -43,6 +44,7 @@ func InsertUrl(c *gin.Context) {
 		log.Fatal("Error connect MongoDB")
 	}
 
+	// Таймаут подключения
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	err = client.Connect(ctx)
 	if err != nil {
@@ -64,13 +66,14 @@ func InsertUrl(c *gin.Context) {
 	}
 	fmt.Println(databases)
 
-	//
-
+	// Новая DB
 	quickstartDatabase := client.Database("quickstart")
+
+	// Новая коллекция
 	podcastsCollection := quickstartDatabase.Collection("podcasts")
 	//episodesCollection := quickstartDatabase.Collection("episodes")
 
-	// Insert One DOC
+	// Добавляет элемент в коллекцию
 	podcastResult, err := podcastsCollection.InsertOne(ctx, bson.D{
 		{Key: "title", Value: "The Polyglot Developer Podcast"},
 		{Key: "author", Value: "Nic Raboy"},
