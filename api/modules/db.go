@@ -6,18 +6,22 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"log"
+	"os"
 	"time"
 )
 
 func ConnectMongo() (*mongo.Client, context.Context, error) {
+
+	mongoUser := os.Getenv("MONGO_INITDB_ROOT_USERNAME")
+	mongoPass := os.Getenv("MONGO_INITDB_ROOT_PASSWORD")
 
 	// Подключение с авторизацией
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://mongo:27017").SetAuth(options.Credential{
 		AuthMechanism:           "",
 		AuthMechanismProperties: nil,
 		AuthSource:              "admin",
-		Username:                "root",
-		Password:                "example",
+		Username:                mongoUser,
+		Password:                mongoPass,
 		PasswordSet:             false,
 	}))
 
