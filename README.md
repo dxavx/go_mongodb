@@ -1,6 +1,7 @@
 ## go_mongodb
 
 ![Docker Compose Actions Workflow](https://github.com/AlexanderOkhrimenko/go_mongodb/workflows/Docker%20Compose%20Actions%20Workflow/badge.svg?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/AlexanderOkhrimenko/go_mongodb)](https://goreportcard.com/report/github.com/AlexanderOkhrimenko/go_mongodb)
 
 The project consists of MongoDB and Golang code that connects to the database. The project  packaged in Docker and consists of three services: mongo, mongo-express (GIU ) and api. Golang code connects to the database, creates and reads a fixed structure.  
 
@@ -16,7 +17,6 @@ Stop: `bash purge.sh`
 
 ## go_mongodb
 
-![Docker Compose Actions Workflow](https://github.com/AlexanderOkhrimenko/go_mongodb/workflows/Docker%20Compose%20Actions%20Workflow/badge.svg?branch=master)
 
 Проект состоит из Mongo DB и кода на Go , подключающийся к базе. Проект упакован в Docker и  состоит из трех сервисов : mongo, mongo-express ( GIU ), api. Gо код соединяется с базой, создает и читает некую фиксированную структуры.
 
