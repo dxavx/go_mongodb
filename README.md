@@ -14,16 +14,3 @@ Mongo-express `http://localhost:8081`
 Stop: `bash purge.sh`
 
 ***
-
-## go_mongodb
-
-
-Проект состоит из Mongo DB и кода на Go , подключающийся к базе. Проект упакован в Docker и  состоит из трех сервисов : mongo, mongo-express ( GIU ), api. Gо код соединяется с базой, создает и читает некую фиксированную структуры.
-
-Start: `bash build.sh`
-
-Test:  `curl http://localhost:8080/v1/url.insert`
-
-Mongo-express `http://localhost:8081`
-
-Stop: `bash purge.sh`

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_mongodb/api/modules"
+	"go_mongodb/modules"
 	"net/http"
 )
 
