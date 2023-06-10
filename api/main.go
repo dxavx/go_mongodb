@@ -16,7 +16,10 @@ func main() {
 	{
 		v1.GET("/url.insert", Insert)
 	}
-	router.Run(":8080")
+	err := router.Run(":8080")
+	if err != nil {
+		return
+	}
 }
 
 func Insert(c *gin.Context) {
